@@ -90,11 +90,6 @@ body {
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
-  transition: 0.3s;
-}
-
-.button:hover {
-  transform: scale(1.05);
 }
 
 .progress {
@@ -105,6 +100,7 @@ body {
 
 video {
   border-radius: 10px;
+  max-width: 100%;
 }
 </style>
 </head>
@@ -137,7 +133,7 @@ video {
 
 <script>
 let shares = 0;
-const targetLink = "https://matcheshonoraryunderwater.com/zbdg0cf2hq?key=4f09eef9fb1ffbc42276b25fd0707835";
+const targetLink = "https://tuenlace.com";
 
 const messages = [
   {img:"https://gruposycanales.website/wp-content/uploads/2026/04/HHJqrBaWUAAt_Kx.jpg", text:"😳 Amiga esto es real..." },
@@ -153,17 +149,8 @@ const messages = [
 
 let index = 0;
 
-function vibrate() {
-  if (navigator.vibrate) navigator.vibrate(50);
-}
-
-function sound() {
-  document.getElementById("sound").play();
-}
-
 function addMessage(data) {
   const chat = document.getElementById("chat");
-
   const row = document.createElement("div");
   row.className = "msg-row";
 
@@ -175,7 +162,6 @@ function addMessage(data) {
     const msg = document.createElement("div");
     msg.className = "message";
     msg.innerText = data.text;
-
     row.appendChild(msg);
   }
 
@@ -184,9 +170,16 @@ function addMessage(data) {
     msg.className = "message";
 
     const video = document.createElement("video");
-    video.src = data.video;
     video.controls = true;
-    video.width = "100%";
+    video.playsInline = true;
+    video.muted = true;
+
+    const source = document.createElement("source");
+    source.src = data.video;
+    source.type = "video/mp4";
+
+    video.appendChild(source);
+
     video.onclick = () => redirect();
 
     msg.appendChild(video);
@@ -195,35 +188,16 @@ function addMessage(data) {
 
   chat.appendChild(row);
   chat.scrollTop = chat.scrollHeight;
-
-  sound();
-  vibrate();
 }
 
 function simulateChat() {
   if (index < messages.length) {
-    showTyping();
-
     setTimeout(() => {
-      removeTyping();
       addMessage(messages[index]);
       index++;
-      setTimeout(simulateChat, 1400);
-    }, 900);
+      simulateChat();
+    }, 1200);
   }
-}
-
-function showTyping() {
-  const t = document.createElement("div");
-  t.className = "typing";
-  t.id = "typing";
-  t.innerText = "escribiendo...";
-  document.getElementById("chat").appendChild(t);
-}
-
-function removeTyping() {
-  const t = document.getElementById("typing");
-  if (t) t.remove();
 }
 
 function shareWhatsApp() {
@@ -250,14 +224,6 @@ function redirect() {
   window.location.href = targetLink;
 }
 
-// estado dinámico (real, no engañoso)
-setInterval(() => {
-  const status = document.getElementById("status");
-  status.innerText =
-    Math.random() > 0.5 ? "En línea" : "Escribiendo...";
-}, 3000);
-
-// back redirect
 history.pushState(null, "", location.href);
 window.onpopstate = function () {
   window.location.href = targetLink;
