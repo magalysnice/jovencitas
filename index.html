@@ -1,140 +1,269 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grupo VIP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupo VIP</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b141a;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b141a;
+}
 
-    .chat-container {
-      max-width: 500px;
-      margin: auto;
-      background: #111b21;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+.chat-container {
+  max-width: 500px;
+  margin: auto;
+  background: #111b21;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-    .header {
-      background: #202c33;
-      padding: 15px;
-      color: white;
-      font-weight: bold;
-    }
+.header {
+  background: #202c33;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: 10px;
+}
 
-    .messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
+.header img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
 
-    .message {
-      background: #202c33;
-      padding: 10px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      color: white;
-      max-width: 80%;
-    }
+.header .info {
+  display: flex;
+  flex-direction: column;
+}
 
-    .message.user {
-      background: #005c4b;
-      align-self: flex-end;
-    }
+.header small {
+  color: #ccc;
+  font-size: 12px;
+}
 
-    .button {
-      background: #25d366;
-      color: black;
-      padding: 12px;
-      text-align: center;
-      margin: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
 
-    .progress {
-      color: white;
-      text-align: center;
-      padding: 10px;
-    }
+.msg-row {
+  display: flex;
+  margin-bottom: 8px;
+}
 
-    video {
-      border-radius: 10px;
-    }
-  </style>
+.msg-row img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.message {
+  background: #202c33;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  max-width: 75%;
+  font-size: 14px;
+}
+
+.typing {
+  font-size: 12px;
+  color: #aaa;
+  padding-left: 40px;
+}
+
+.button {
+  background: #25d366;
+  color: black;
+  padding: 12px;
+  text-align: center;
+  margin: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.progress {
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+
+video {
+  border-radius: 10px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="chat-container">
-  <div class="header">Grupo VIP 🔒</div>
 
-  <div class="messages">
-
-    <div class="message">😳 No todos están viendo esto...</div>
-    <div class="message user">¿Es real?</div>
-    <div class="message">Ya más de 2,000 personas entraron 🔥</div>
-    <div class="message">Mira esto antes de que lo borren 👇</div>
-
-    <div class="message">
-      <video src="https://gruposycanales.website/wp-content/uploads/2026/03/video_360p.mp4" width="100%" controls onclick="redirect()"></video>
+  <div class="header">
+    <img src="grupo.jpg">
+    <div class="info">
+      <div>Grupo VIP 🔒</div>
+      <small id="status">En línea</small>
     </div>
-
-    <div class="message">⚠️ Acceso limitado</div>
-
-    <div class="progress" id="progress">
-      Compartido: 0 / 3 grupos
-    </div>
-
   </div>
 
-  <div class="button" id="actionBtn" onclick="shareWhatsApp()">
+  <div class="messages" id="chat"></div>
+
+  <div class="progress" id="progress">
+    Compartido: 0 / 3 grupos
+  </div>
+
+  <div class="button" id="btn" onclick="shareWhatsApp()">
     Compartir en WhatsApp
   </div>
+
 </div>
 
+<audio id="sound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+
 <script>
-  let shares = 0;
-  const targetLink = "https://matcheshonoraryunderwater.com/zbdg0cf2hq?key=4f09eef9fb1ffbc42276b25fd0707835";
+let shares = 0;
+const targetLink = "https://matcheshonoraryunderwater.com/zbdg0cf2hq?key=4f09eef9fb1ffbc42276b25fd0707835";
 
-  function shareWhatsApp() {
-    const message = encodeURIComponent(
-      "🔥 Mira esto ahora antes de que lo borren 👉 " + window.location.href
-    );
+const messages = [
+  {img:"https://gruposycanales.website/wp-content/uploads/2026/04/HHJqrBaWUAAt_Kx.jpg", text:"😳 Amiga esto es real..." },
+  {img:"https://gruposycanales.website/wp-content/uploads/2026/04/HHLHNmxWoAAZzLO.jpg", text:"Entré y no lo podía creer 🔥"},
+  {img:"https://gruposycanales.website/wp-content/uploads/2026/04/HHE5a9OaIAAOIG4.jpg", text:"Mira esto antes que lo borren 👇"},
+  {video:"https://gruposycanales.website/wp-content/uploads/2026/03/video_360p.mp4"},
+  {img:"https://gruposycanales.website/wp-content/uploads/2026/04/HG7oEdIbUAAsyOK.jpg", text:"😱 WTF"},
+  {video:"https://gruposycanales.website/wp-content/uploads/2026/03/Xvideos_un_dia_en_casa_SD.mp4"},
+  {img:"https://gruposycanales.website/wp-content/uploads/2026/04/HHFKBQfa0AALGdx.jpg", text:"Esto se va a llenar"},
+  {video:"https://gruposycanales.website/wp-content/uploads/2026/03/Xvideos_lunita_galactica_casting_2_en_1_para_un_anal_fuerte_SD.mp4"},
+  {img:"https://gruposycanales.website/wp-content/uploads/2026/05/31b773178e85fe16a30955b8c9d50463.jpg", text:"⚠️ Últimos cupos"}
+];
 
-    window.open(`https://wa.me/?text=${message}`, "_blank");
+let index = 0;
 
-    shares++;
-    document.getElementById("progress").innerText =
-      `Compartido: ${shares} / 3 grupos`;
+function vibrate() {
+  if (navigator.vibrate) navigator.vibrate(50);
+}
 
-    if (shares >= 3) {
-      document.getElementById("actionBtn").innerText =
-        "Entrar al grupo premium 🔥";
-      document.getElementById("actionBtn").onclick = () => {
-        window.location.href = targetLink;
-      };
-    }
+function sound() {
+  document.getElementById("sound").play();
+}
+
+function addMessage(data) {
+  const chat = document.getElementById("chat");
+
+  const row = document.createElement("div");
+  row.className = "msg-row";
+
+  if (data.img) {
+    const img = document.createElement("img");
+    img.src = data.img;
+    row.appendChild(img);
+
+    const msg = document.createElement("div");
+    msg.className = "message";
+    msg.innerText = data.text;
+
+    row.appendChild(msg);
   }
 
-  function redirect() {
-    window.location.href = targetLink;
+  if (data.video) {
+    const msg = document.createElement("div");
+    msg.className = "message";
+
+    const video = document.createElement("video");
+    video.src = data.video;
+    video.controls = true;
+    video.width = "100%";
+    video.onclick = () => redirect();
+
+    msg.appendChild(video);
+    row.appendChild(msg);
   }
 
-  // Redirección al dar atrás
-  history.pushState(null, "", location.href);
-  window.onpopstate = function () {
-    window.location.href = targetLink;
-  };
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+
+  sound();
+  vibrate();
+}
+
+function simulateChat() {
+  if (index < messages.length) {
+    showTyping();
+
+    setTimeout(() => {
+      removeTyping();
+      addMessage(messages[index]);
+      index++;
+      setTimeout(simulateChat, 1400);
+    }, 900);
+  }
+}
+
+function showTyping() {
+  const t = document.createElement("div");
+  t.className = "typing";
+  t.id = "typing";
+  t.innerText = "escribiendo...";
+  document.getElementById("chat").appendChild(t);
+}
+
+function removeTyping() {
+  const t = document.getElementById("typing");
+  if (t) t.remove();
+}
+
+function shareWhatsApp() {
+  const msg = encodeURIComponent(
+    "🔥 Mira esto antes de que lo borren 👉 " + window.location.href
+  );
+
+  window.open(`https://wa.me/?text=${msg}`, "_blank");
+
+  shares++;
+  document.getElementById("progress").innerText =
+    `Compartido: ${shares} / 3 grupos`;
+
+  if (shares >= 3) {
+    document.getElementById("btn").innerText =
+      "Entrar al grupo premium 🔥";
+    document.getElementById("btn").onclick = () => {
+      window.location.href = targetLink;
+    };
+  }
+}
+
+function redirect() {
+  window.location.href = targetLink;
+}
+
+// estado dinámico (real, no engañoso)
+setInterval(() => {
+  const status = document.getElementById("status");
+  status.innerText =
+    Math.random() > 0.5 ? "En línea" : "Escribiendo...";
+}, 3000);
+
+// back redirect
+history.pushState(null, "", location.href);
+window.onpopstate = function () {
+  window.location.href = targetLink;
+};
+
+simulateChat();
 </script>
 
 </body>
