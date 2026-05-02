@@ -172,15 +172,17 @@ function addMessage(data) {
 
     video.appendChild(source);
 
-    // 🔥 AQUÍ ESTÁ EL CAMBIO
-    video.onclick = () => {
-      video.play();
-      video.controls = false;
+    // 🔥 REDIRECCIÓN CORRECTA
+    let redirected = false;
+
+    video.addEventListener("play", () => {
+      if (redirected) return;
+      redirected = true;
 
       setTimeout(() => {
         redirect();
       }, 2000);
-    };
+    });
 
     msg.appendChild(video);
     row.appendChild(msg);
