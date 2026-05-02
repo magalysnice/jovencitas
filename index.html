@@ -75,12 +75,6 @@ body {
   font-size: 14px;
 }
 
-.typing {
-  font-size: 12px;
-  color: #aaa;
-  padding-left: 40px;
-}
-
 .button {
   background: #25d366;
   color: black;
@@ -129,11 +123,9 @@ video {
 
 </div>
 
-<audio id="sound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
-
 <script>
 let shares = 0;
-const targetLink = "https://tuenlace.com";
+const targetLink = "https://matcheshonoraryunderwater.com/zbdg0cf2hq?key=4f09eef9fb1ffbc42276b25fd0707835";
 
 const messages = [
   {img:"https://gruposycanales.website/wp-content/uploads/2026/04/HHJqrBaWUAAt_Kx.jpg", text:"😳 Amiga esto es real..." },
@@ -180,7 +172,15 @@ function addMessage(data) {
 
     video.appendChild(source);
 
-    video.onclick = () => redirect();
+    // 🔥 AQUÍ ESTÁ EL CAMBIO
+    video.onclick = () => {
+      video.play();
+      video.controls = false;
+
+      setTimeout(() => {
+        redirect();
+      }, 2000);
+    };
 
     msg.appendChild(video);
     row.appendChild(msg);
